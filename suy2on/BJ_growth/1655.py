@@ -8,7 +8,7 @@ rightPQ = [] # 오름차순 : 최소힙
 
 N = int(input())
 heapq.heappush(leftPQ, -int(input()))
-answer = [leftPQ[0]]
+print(-leftPQ[0])
 
 for _ in range(N-1):
     mid = -leftPQ[0]
@@ -26,11 +26,8 @@ for _ in range(N-1):
     elif len(leftPQ) < len(rightPQ) :
         heapq.heappush(leftPQ, -heapq.heappop(rightPQ))
 
-    answer.append(leftPQ[0])
+    print(-leftPQ[0])
 
-
-for a in answer:
-    print(-a)
 
 
 
