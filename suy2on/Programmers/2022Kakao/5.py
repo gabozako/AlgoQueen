@@ -12,7 +12,7 @@ def find_path(info, paths):
 
         for node in nodes:
             for neighbor in paths[node]:
-                if neighbor not in node:
+                if neighbor not in nodes:
                     if info[neighbor] and sheep - wolf < 2:  # 늑대가 추가 안되는 경우
                         continue
                     newNodes = nodes[:]
