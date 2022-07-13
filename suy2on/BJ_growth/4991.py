@@ -41,10 +41,9 @@ def clean_up():
 
         if visited[pos[0]][pos[1]][clean]: # 같은 먼지를 치우고 방문한 이력있다면
             continue
-        print("hear")
         if board[pos[0]][pos[1]] == "*":  # 먼지면
             clean = clean | 1 << dirty.index(pos)
-            print(bin(clean))
+
         if clean == (1 << len(dirty))-1:  # 청소끝
             return dis
 
@@ -64,9 +63,11 @@ while True:
         break
     board = []
     dirty = []
+    ### [x][y][먼지상태] = 1 or 0
     visited = [[[0] * (1 << 9) for _ in range(C)] for _ in range(R)]
     for _ in range(R):
         board.append(list(input().rstrip()))
 
     print(clean_up())
+
 

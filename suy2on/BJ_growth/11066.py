@@ -4,16 +4,16 @@ input = sys.stdin.readline
 
 N = int(input())
 
+
 def merge(head, tail):
     if memo[head][tail] != -1:
         return memo[head][tail]
 
     res = float('inf')
     for p in range(head, tail):
-        res = min(res, merge(head,p) + merge(p+1, tail))
+        res = min(res, merge(head, p) + merge(p + 1, tail))
 
-
-    memo[head][tail] = res + subsum[tail+1] - subsum[head]
+    memo[head][tail] = res + subsum[tail + 1] - subsum[head]
 
     return memo[head][tail]
 
@@ -35,4 +35,4 @@ for i in range(N):
             elif j + 1 == k:
                 memo[j][k] = pages[j] + pages[k]
 
-    print(merge(0, M-1))
+    print(merge(0, M - 1))

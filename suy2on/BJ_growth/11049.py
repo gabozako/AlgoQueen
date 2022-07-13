@@ -21,7 +21,6 @@ def init():
 
 
 def multiple_matrix(head,tail):
-    print(head,tail)
     if memo[head][tail] != -1:
         return memo[head][tail]
 

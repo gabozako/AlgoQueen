@@ -2,7 +2,7 @@ import sys
 
 
 def is_valid(x, color):
-    if 0 <= x <= N-1 and color == pos[x][1]: # 색깔이 같고 좌표가 범위안에 있어야 함 
+    if 0 <= x <= N-1 and color == pos[x][1]: # 색깔이 같고 좌표가 범위안에 있어야 함
         return True
     else:
         return False
