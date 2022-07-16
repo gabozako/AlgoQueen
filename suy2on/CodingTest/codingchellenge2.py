@@ -1,72 +1,72 @@
-# 회전하기전에 행렬[i][j] = (i-1) x columns + j
+# 회전하기전에 행렬[i][j] = (i-1) x columns + 1
 def solution(rows, columns, queries):
     answer = []
-    board = [ [0] * columns for _ in range(rows)]
+    board = [[i * columns + j + 1 for j in range(columns)] for i in range(rows)]
 
-    # 유효성검사
-    def is_valid(r,c, query):
-        r1, c1, r2, c2 = query
-        if r1 <= r <= r2 and c1 <= c <= c2:
-            return True
+    # 쿼리적용
+    for r1, c1, r2, c2 in queries:
+        r1, c1, r2, c2 = r1 - 1, c1 - 1, r2 - 1, c2 - 1
+        cur = board[r1][c1]
+        min_num = cur
 
-        return False
+        # 순서대로 넣기 : 3개씩
+        for c in range(c1 + 1, c2 + 1):
+            board[r1][c], cur = cur, board[r1][c]
+            min_num = min(cur, min_num)
+        for r in range(r1 + 1, r2 + 1):
+            board[r][c2], cur = cur, board[r][c2]
+            min_num = min(cur, min_num)
+        for c in range(c2 - 1, c1 - 1, -1):
+            board[r2][c], cur = cur, board[r2][c]
+            min_num = min(cur, min_num)
+        for r in range(r2 - 1, r1 - 1, -1):
+            board[r][c1], cur = cur, board[r][c1]
+            min_num = min(cur, min_num)
 
-    # 보드초기화
-    for row in range(rows):
-        for col in range(columns):
-            board[row][col] = row * columns + col + 1
+        answer.append(min_num)
+
+    return answer
+
+
+##### 풀이 2 ######
+
+
+# 회전하기전에 행렬[i][j] = (i-1) x columns + j
+import collections
+
+
+def solution(rows, columns, queries):
+    answer = []
+    board = [[i * columns + j + 1 for j in range(columns)] for i in range(rows)]
 
     # 쿼리적용
     for query in queries:
         r1, c1, r2, c2 = query
+        r1, c1, r2, c2 = r1 - 1, c1 - 1, r2 - 1, c2 - 1
 
-        # 오른쪽
-        cur = [r1,c1]
-        cur_val = board[r1-1][c1-1]
-        result = cur_val
-        while True:
-            if not is_valid(cur[0], cur[1]+1, query):
-                break
-            next_val = board[cur[0]-1][cur[1]] # 다음 값 저장
-            result = min(result, next_val)
-            board[cur[0]-1][cur[1]] = cur_val # 덮어쓰기
-            cur[1] += 1 # 오른쪽으로 움직이기
-            cur_val = next_val
+        result = collections.deque()
 
-        # 아래쪽
-        while True:
-            if not is_valid(cur[0]+1, cur[1], query):
-                break
-            next_val = board[cur[0]][cur[1]-1] # 다음 값 저장
-            result = min(result, next_val)
-            board[cur[0]][cur[1]-1] = cur_val # 덮어쓰기
-            cur[0] += 1 # 아래쪽으로 움직이기
-            cur_val = next_val
+        # 순서대로 넣기
+        for c in range(c1, c2):
+            result.append(board[r1][c])
+        for r in range(r1, r2):
+            result.append(board[r][c2])
+        for c in range(c2, c1, -1):
+            result.append(board[r2][c])
+        for r in range(r2, r1, -1):
+            result.append(board[r][c1])
 
+        answer.append(min(result))
+        result.rotate(1)
 
-        # 왼쪽
-        while True:
-            if not is_valid(cur[0], cur[1]-1, query):
-                break
-            next_val = board[cur[0]-1][cur[1]-2] # 다음 값 저장
-            result = min(result, next_val)
-            board[cur[0]-1][cur[1]-2] = cur_val # 덮어쓰기
-            cur[1] -= 1 # 왼쪽으로 움직이기
-            cur_val = next_val
-
-
-        # 위쪽
-        while True:
-            if not is_valid(cur[0]-1, cur[1], query):
-                break
-            next_val = board[cur[0]-2][cur[1]-1] # 다음 값 저장
-            result = min(result, next_val)
-            board[cur[0]-2][cur[1]-1] = cur_val # 덮어쓰기
-            cur[0] -= 1 # 위쪽으로 움직이기
-            cur_val = next_val
-
-        answer.append(result)
-
-
+        # 시계방향으로 회전해서 넣기
+        for c in range(c1, c2):
+            board[r1][c] = result.popleft()
+        for r in range(r1, r2):
+            board[r][c2] = result.popleft()
+        for c in range(c2, c1, -1):
+            board[r2][c] = result.popleft()
+        for r in range(r2, r1, -1):
+            board[r][c1] = result.popleft()
 
     return answer
