@@ -1,24 +1,48 @@
 def solution(board, skill):
     answer = 0
+    R = len(board)
+    C = len(board[0])
+    totalSum = [[0] * C for _ in range(R)]
 
-    # 액션
-    for sk in skill:
-        action, r1, c1, r2, c2, degree = sk
+    def is_valid(r, c):
+        if 0 <= r <= R - 1 and 0 <= c <= C - 1:
+            return True
+        return False
+
+    # 누적합 표시 O(M)
+    for s in skill:
+        action, r1, c1, r2, c2, degree = s
         if action == 1:
-            for r in range(r1, r2 + 1):
-                for c in range(c1, c2 + 1):
-                    board[r][c] -= degree
+            totalSum[r1][c1] -= degree
+            if is_valid(r2 + 1, c1):
+                totalSum[r2 + 1][c1] += degree
+            if is_valid(r1, c2 + 1):
+                totalSum[r1][c2 + 1] += degree
+            if is_valid(r2 + 1, c2 + 1):
+                totalSum[r2 + 1][c2 + 1] -= degree
         else:
-            for r in range(r1, r2 + 1):
-                for c in range(c1, c2 + 1):
-                    board[r][c] += degree
+            totalSum[r1][c1] += degree
+            if is_valid(r2 + 1, c1):
+                totalSum[r2 + 1][c1] -= degree
+            if is_valid(r1, c2 + 1):
+                totalSum[r1][c2 + 1] -= degree
+            if is_valid(r2 + 1, c2 + 1):
+                totalSum[r2 + 1][c2 + 1] += degree
 
-    # 파괴되지 않은 건물
-    for r in range(len(board)):
-        for c in range(len(board[0])):
-            if board[r][c] > 0:
+    # 가로방향 누적합계산 O(N)
+    for r in range(R):
+        for c in range(1, C):
+            totalSum[r][c] += totalSum[r][c - 1]
+
+    # 세로방향 누적합계산 O(N)
+    for c in range(C):
+        for r in range(1, R):
+            totalSum[r][c] += totalSum[r - 1][c]
+
+    # 전체 건물파괴 계산 O(N)
+    for r in range(R):
+        for c in range(C):
+            if board[r][c] + totalSum[r][c] > 0:
                 answer += 1
 
     return answer
-
-

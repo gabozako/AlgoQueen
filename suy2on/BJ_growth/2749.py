@@ -12,5 +12,4 @@ while i < limit:
      i += 1
 
 
-
 print(fibo[N%1500000])
