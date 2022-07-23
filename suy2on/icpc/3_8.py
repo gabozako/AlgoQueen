@@ -18,7 +18,7 @@ right = houses[-1] - houses[0]
 # 최대거리를 이분탐색으로 찾기
 while left <= right:
     mid = (left + right) // 2
-    cnt = 1 # 첫번째는 무조건 포함 M개 넘어도 되니까 
+    cnt = 1 # 첫번째는 무조건 포함 M개 넘어도 되니까
     i = 0
     j = 1
     while j < N:
