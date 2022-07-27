@@ -9,15 +9,15 @@ for i in range(9):
         if not sudocu[i][j]:
             holes.append([i,j])
 
-def is_valid(n):
+def is_valid(n, val):
     row = holes[n][0]
     col = holes[n][1]
 
     # 가로 세로 확인
     for i in range(9):
-        if i != row and sudocu[i][col] == sudocu[row][col]:
+        if sudocu[i][col] == val:
             return False
-        if i != col and sudocu[row][i] == sudocu[row][col]:
+        if sudocu[row][i] == val:
             return False
 
     # 네모박스 확인
@@ -25,7 +25,7 @@ def is_valid(n):
     cs = (col // 3) * 3
     for i in range(3):
         for j in range(3):
-            if row != rs+i and col != cs+j and sudocu[rs+i][cs+j] == sudocu[row][col]:
+            if sudocu[rs+i][cs+j] == val:
                 return False
 
 
@@ -46,10 +46,10 @@ def dfs(n):
         return
 
     for i in range(1,10):
-        sudocu[holes[n][0]][holes[n][1]] = i
-        if is_valid(n):
+        if is_valid(n,i):
+            sudocu[holes[n][0]][holes[n][1]] = i
             dfs(n+1)
-        sudocu[holes[n][0]][holes[n][1]] = 0
+            sudocu[holes[n][0]][holes[n][1]] = 0
 
 dfs(0)
 
