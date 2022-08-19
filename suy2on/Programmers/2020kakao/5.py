@@ -7,14 +7,12 @@ def solution(words, queries):
         cnt = 0
         l = len(q)
         if q[0] == "?":
-            while "?" in q:
-                q = q.replace("?", "")
+            q = q.replace("?", "")
             for w in words:
                 if len(w) == l and w[-len(q):] == q:
                     cnt += 1
         else:
-            while "?" in q:
-                q = q.replace("?", "")
+            q = q.replace("?", "")
             for w in words:
                 if len(w) == l and w[:len(q)] == q:
                     cnt += 1
@@ -40,8 +38,6 @@ class Node:
 cnt = 0
 
 def solution(words, queries):
-    # 중복제거
-    words = set(words)
 
     # 트라이 두개 만들기
     trie1 = Node(None, dict(), False)
@@ -102,38 +98,40 @@ def solution(words, queries):
     return answer
 
 
-## 이분탐색 
+# 이진탐색
 
-from bisect import bisect_left, bisect_right
-
-
-def count_value(a, left, right):
-    left_index = bisect_left(a, left)
-    right_index = bisect_right(a, right)
-    return right_index - left_index
+import bisect
+import collections
 
 
 def solution(words, queries):
     answer = []
 
-    array = [[] for _ in range(10001)]
-    reverse_array = [[] for _ in range(10001)]
-
+    array = collections.defaultdict(list)
+    reverse_array = collections.defaultdict(list)
 
     for word in words:
         array[len(word)].append(word)
         reverse_array[len(word)].append(word[::-1])
 
-    for i in range(10001):
-        array[i].sort()
-        reverse_array[i].sort()
+    for key in array.keys():
+        array[key].sort()
+
+    for key in reverse_array.keys():
+        reverse_array[key].sort()
+
+
 
     for q in queries:
         if q[0] != '?':
-            res = count_value(array[len(q)], q.replace('?', 'a'), q.replace('?', 'z'))
+            head = bisect.bisect_right(array[len(q)], q.replace('?', 'a'))
+            tail = bisect.bisect_left(array[len(q)], q.replace('?', 'z'))
         else:
-            res = count_value(reverse_array[len(q)], q[::-1].replace('?', 'a'), q[::-1].replace('?', 'z'))
-        answer.append(res)
+            head = bisect.bisect_right(reverse_array[len(q)], q[::-1].replace('?', 'a'))
+            tail = bisect.bisect_left(reverse_array[len(q)], q[::-1].replace('?', 'z'))
+
+        answer.append(tail - head)
+
     return answer
 
 
