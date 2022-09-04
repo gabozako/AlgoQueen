@@ -1,5 +1,5 @@
 
-# 정확성 통과 
+# 정확성 통과
 def solution(n, k, cmd):
     li = [True] * n
     trashcan = []
