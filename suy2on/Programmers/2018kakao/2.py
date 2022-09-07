@@ -9,12 +9,7 @@ def minute_to_time(minute):
     hour = str(hour)
     minute = str(minute)
 
-    if len(hour) == 1:
-        hour = "0" + hour
-    if len(minute) == 1:
-        minute = "0" + minute
-
-    return hour + ":" + minute
+    return hour.zfill(2) + ":" + minute.zfill(2)
 
 
 def solution(n, t, m, timetable):
