@@ -18,7 +18,7 @@ def solution(files):
             i += 1
 
         # NUMBER
-        while i < len(file) and len(number) < 5:
+        while i < len(file):
             if not file[i].isdigit():
                 break
             number += file[i]

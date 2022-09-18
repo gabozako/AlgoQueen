@@ -10,7 +10,7 @@ def solution(msg):
         j = i + 1
 
         # 사전에 없을 때 까지
-        while j < len(msg) + 2 and msg[i:j] in dictionary.keys():
+        while j < len(msg) + 1 and msg[i:j] in dictionary.keys():
             j += 1
         # 사전에 있는 것
         answer.append(dictionary[msg[i:j - 1]])
