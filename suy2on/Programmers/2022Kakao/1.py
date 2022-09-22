@@ -2,26 +2,17 @@ import collections
 
 
 def solution(id_list, report, k):
-    send = collections.defaultdict(set)
-    receive = collections.defaultdict(set)
-    over = []
     answer = []
+    mails = collections.defaultdict(int)
+    black_list = collections.defaultdict(set)
 
     for r in report:
-        user1, user2 = r.split()
-        send[user1].add(user2)
-        receive[user2].add(user1)
+        mem1, mem2 = r.split()
+        black_list[mem2].add(mem1)
 
-    for name in id_list:
-        if len(receive[name]) >= k:
-            over.append(name)
+    for b in black_list.keys():
+        if len(black_list[b]) >= k:
+            for mem in black_list[b]:
+                mails[mem] += 1
 
-    ## 받게 될 메일 수
-    for name in id_list:
-        cnt = 0
-        for n in send[name]:
-            if n in over:
-                cnt += 1
-        answer.append(cnt)
-
-    return answer
+    return [mails[i] for i in id_list]
