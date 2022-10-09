@@ -16,7 +16,7 @@ fish_dxy = {
 
 # 상 좌 하 우
 shark_dxy = [[-1,0], [0,-1], [1,0], [0,1]]
-fishbowl = [[ [] for _ in range(4)] for _ in range(4)]
+fishbowl = [[[] for _ in range(4)] for _ in range(4)]
 
 M, S = map(int, input().split())
 

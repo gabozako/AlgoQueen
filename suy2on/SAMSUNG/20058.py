@@ -53,7 +53,7 @@ def melting():
 
     return new_ice
 
-# 얼음 세기 
+# 얼음 세기
 def count_ice():
     cnt = 0
     for i in range(2**N):
