@@ -59,7 +59,7 @@ def compute_score():
             if not visited[i][j]:
                 groups.append(group(i,j,visited))
 
-    # TODO : 그룹별로 숫자가 같을 수도 있어서 그룹 인덱스로해서 주변 블록들 in연산으로 어떤 그룹소속인지 찾아야함  
+    # TODO : 그룹별로 숫자가 같을 수도 있어서 그룹 인덱스로해서 주변 블록들 in연산으로 어떤 그룹소속인지 찾아야함
     # 그룹별 이웃구하기
     for g in groups:
         neighber = collections.defaultdict(int)
