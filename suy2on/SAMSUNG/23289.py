@@ -1,6 +1,7 @@
 ## 온풍기 안녕
 import sys
 import collections
+import copy
 
 input = sys.stdin.readline
 
@@ -15,6 +16,7 @@ for _ in range(R):
     room.append(list(map(int, input().split())))
 
 W = int(input())
+
 # 벽추가
 for _ in range(W):
     r, c, d = map(int, input().split())
@@ -197,9 +199,7 @@ def warming(si,sj):
 ## 온도조절
 ddrc = [[0,1],[1,0]]
 def adjust():
-    new_heat = []
-    for i in range(R):
-        new_heat.append(heat[i][:])
+    new_heat = copy.deepcopy(heat)
 
 
     for i in range(R):
@@ -231,6 +231,7 @@ def check_temp():
 
 
 choco = 0
+# print(walls)
 while True:
     ## 온풍기 가동
     for w in warmmer:

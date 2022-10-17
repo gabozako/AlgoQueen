@@ -12,7 +12,7 @@ for _ in range(4):
     fishs = []
     fish = list(map(int, input().split()))
     for i in range(0,8,2):
-        ## TODO : 방향은 0부터 시작하게 
+        ## TODO : 방향은 0부터 시작하게
         fishs.append([fish[i],fish[i+1]-1])
     board.append(fishs)
 

@@ -46,6 +46,7 @@ def find_block_group(si,sj,visited):
                     if not board[ni][nj]:
                         rainbow += 1
 
+    # 무지개 visited 해제 : 모든 그룹에서 공유 가능
     for gi,gj in group:
         if not board[gi][gj]:
             visited[gi][gj] = False
