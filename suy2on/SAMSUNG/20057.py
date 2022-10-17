@@ -73,6 +73,7 @@ for num in range((N-1) * 2):
             else:
                 answer += m_sand
             A[ni][nj] -= m_sand
+
         if is_valid(ni+d[0], nj+d[1]):
             A[ni+d[0]][nj+d[1]] += A[ni][nj]
         else:
